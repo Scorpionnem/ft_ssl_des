@@ -6,7 +6,7 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 12:34:33 by mbatty            #+#    #+#             */
-/*   Updated: 2026/02/26 14:59:23 by mbatty           ###   ########.fr       */
+/*   Updated: 2026/02/27 21:39:13 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,8 +171,8 @@ void	base64(char *str)
 
 int	main(int UNUSED(ac), char **av)
 {
-	base64(av[1]);
-	return (0);
+	// base64(av[1]);
+	// return (0);
 	t_ctx	ctx;
 
 	if (ctx_init(&ctx, &av) == -1)
