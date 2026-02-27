@@ -6,7 +6,7 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 12:34:07 by mbatty            #+#    #+#             */
-/*   Updated: 2026/02/25 12:08:45 by mbatty           ###   ########.fr       */
+/*   Updated: 2026/02/27 21:37:16 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,11 @@
 #include "md5.h"
 #include "sha256.h"
 
-typedef char *(*t_hash_func)(char*, uint32_t);
+typedef void (*t_command_func)(struct s_ctx *ctx);
 
 typedef struct	s_ctx
 {
-	t_hash_func	fn;
+	t_command_func	fn;
 	char		*fn_str;
 
 	t_opt_ctx			opt_ctx;

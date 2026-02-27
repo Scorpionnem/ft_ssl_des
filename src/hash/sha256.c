@@ -6,7 +6,7 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/24 00:03:21 by mbatty            #+#    #+#             */
-/*   Updated: 2026/02/25 12:09:08 by mbatty           ###   ########.fr       */
+/*   Updated: 2026/02/27 21:30:53 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ static void	sha256_transform(t_sha256_ctx *ctx, uint8_t *data)
 	ctx->state[7] += h;
 }
 
-char	*sha256(char *msg, uint32_t len)
+char	*sha256(uint8_t *msg, uint32_t len)
 {
 	t_sha256_ctx	ctx;
 
@@ -134,7 +134,7 @@ char	*sha256(char *msg, uint32_t len)
 		sha256_transform(&ctx, ctx.data);
 		ft_memset(ctx.data, 0, 56);
 	}
-	
+
 	ctx.bitlen += ctx.data_len * 8;
 	ctx.data[63] = ctx.bitlen;
 	ctx.data[62] = ctx.bitlen >> 8;

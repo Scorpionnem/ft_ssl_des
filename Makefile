@@ -7,15 +7,17 @@ LFLAGS :=	-lm
 ###
 
 INCLUDE_DIRS :=	inc/\
-				libft/\
-				ft_printf/includes\
+				inc/hash/\
+				lib/libft/\
+				lib/ft_printf/includes\
 
 SRCS :=	main\
 		opt\
 		ctx\
-		md5\
-		sha256\
+		hash/md5\
+		hash/sha256\
 		print\
+		input\
 
 ###
 
@@ -33,8 +35,8 @@ DEPS =	$(SRCS:%.c=$(OBJ_DIR)/%.d)
 
 ###
 
-LIBFT :=	libft/libft.a
-LIBFTPRINTF :=	ft_printf/libftprintf.a
+LIBFT :=	lib/libft/libft.a
+LIBFTPRINTF :=	lib/ft_printf/libftprintf.a
 
 compile: $(LIBFTPRINTF) $(LIBFT)
 	@make -j all --no-print-directory
@@ -42,10 +44,10 @@ compile: $(LIBFTPRINTF) $(LIBFT)
 all: $(NAME)
 
 $(LIBFT):
-	@make -C libft/ all --no-print-directory
+	@make -C lib/libft/ all --no-print-directory
 
 $(LIBFTPRINTF):
-	@make -C ft_printf/ all --no-print-directory
+	@make -C lib/ft_printf/ all --no-print-directory
 
 $(NAME): $(OBJS)
 	@echo Compiling $(NAME)
@@ -60,14 +62,14 @@ re: fclean compile
 
 fclean: clean
 	@echo Removed $(NAME)
-	@make -C libft/ fclean --no-print-directory
-	@make -C ft_printf/ fclean --no-print-directory
+	@make -C lib/libft/ fclean --no-print-directory
+	@make -C lib/ft_printf/ fclean --no-print-directory
 	@rm -rf $(NAME)
 
 clean:
 	@echo Removed $(OBJ_DIR)
-	@make -C ft_printf/ clean --no-print-directory
-	@make -C libft/ clean --no-print-directory
+	@make -C lib/ft_printf/ clean --no-print-directory
+	@make -C lib/libft/ clean --no-print-directory
 	@rm -rf $(OBJ_DIR)
 
 .PHONY: all clean fclean re compile

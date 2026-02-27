@@ -6,7 +6,7 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/24 00:01:23 by mbatty            #+#    #+#             */
-/*   Updated: 2026/02/25 12:30:29 by mbatty           ###   ########.fr       */
+/*   Updated: 2026/02/27 21:30:49 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ const uint32_t	S[64] = {
 	6, 10, 15, 21, 6, 10, 15, 21, 6, 10, 15, 21, 6, 10, 15, 21,
 };
 
-char	*md5(char *msg, uint32_t len)
+char	*md5(uint8_t *msg, uint32_t len)
 {
 	(void)msg;(void)len;
 
@@ -61,7 +61,7 @@ char	*md5(char *msg, uint32_t len)
 	uint32_t	total_length = number_blocks << 6;
 
 	uint8_t	*padding_bytes = ft_calloc((total_length - len), sizeof(uint8_t));
-	uint64_t	padding_bytes_size = (total_length - len) * sizeof(uint8_t); 
+	uint64_t	padding_bytes_size = (total_length - len) * sizeof(uint8_t);
 	padding_bytes[0] = (uint8_t)0x80;
 
 	uint64_t message_length_bits = len << 3;
@@ -138,7 +138,7 @@ char	*md5(char *msg, uint32_t len)
 			n >>= 8;
 		}
 	}
-	
+
 	for (uint32_t i = 0; i < 16; i++)
 		ft_putnbr_hex_u(hash[i], 0);
 

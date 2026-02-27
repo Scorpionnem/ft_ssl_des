@@ -6,7 +6,7 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/21 18:05:50 by mbatty            #+#    #+#             */
-/*   Updated: 2026/02/25 12:30:24 by mbatty           ###   ########.fr       */
+/*   Updated: 2026/02/27 21:35:58 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,10 @@
 int		ctx_init_opts(t_ctx *ctx, char ***av);
 void	print_help();
 
-static t_hash_func	get_hash_func(char *id)
+static t_command_func	get_command_func(char *id)
 {
 	#define COMMANDS_COUNT 2
-	const struct {char *id; t_hash_func fn;} commands_to_funcs[COMMANDS_COUNT] =
+	const struct {char *id; t_command_func fn;} commands_to_funcs[COMMANDS_COUNT] =
 	{
 		{.id = "md5", .fn = md5},
 		{.id = "sha256", .fn = sha256},
@@ -52,7 +52,7 @@ int	ctx_init(t_ctx *ctx, char ***av)
 		ft_dprintf(2, "ft_ssl: command required (see -h)\n");
 		return (-1);
 	}
-	ctx->fn = get_hash_func(*av[0]);
+	ctx->fn = get_command_func(*av[0]);
 	if (ctx->fn == NULL)
 	{
 		opt_ctx_delete(&ctx->opt_ctx);
