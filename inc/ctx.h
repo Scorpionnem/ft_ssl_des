@@ -6,7 +6,7 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 12:34:07 by mbatty            #+#    #+#             */
-/*   Updated: 2026/03/01 14:32:56 by mbatty           ###   ########.fr       */
+/*   Updated: 2026/03/01 15:02:04 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ typedef int (*t_command_func)(void *ctx);
 
 typedef struct	s_ctx
 {
+	char	***av;
+
 	t_command_func	fn;
 	char		*fn_str;
 

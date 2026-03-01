@@ -6,12 +6,13 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/24 00:01:23 by mbatty            #+#    #+#             */
-/*   Updated: 2026/03/01 14:35:20 by mbatty           ###   ########.fr       */
+/*   Updated: 2026/03/01 14:59:02 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "md5.h"
 #include "ctx.h"
+#include "itoa.h"
 #include "libft.h"
 
 #include <stdlib.h>
@@ -139,9 +140,10 @@ char	*md5(uint8_t *msg, uint32_t len)
 		}
 	}
 
+	char	buf[33] = {0};
 	for (uint32_t i = 0; i < 16; i++)
-		ft_putnbr_hex_u(hash[i], 0);
-
+	ft_itoa_hex(buf + i * 2, hash[i]);
+	
 	free(padding_bytes);
-	return (NULL);
+	return (ft_strdup(buf));
 }

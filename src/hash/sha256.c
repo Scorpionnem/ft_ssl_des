@@ -6,13 +6,14 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/24 00:03:21 by mbatty            #+#    #+#             */
-/*   Updated: 2026/02/27 21:30:53 by mbatty           ###   ########.fr       */
+/*   Updated: 2026/03/01 14:58:24 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sha256.h"
 #include "libft.h"
 #include "ctx.h"
+#include "itoa.h"
 #include "ft_printf.h"
 #include <stdlib.h>
 #include <string.h>
@@ -159,8 +160,9 @@ char	*sha256(uint8_t *msg, uint32_t len)
 		hash[i + 28] = (ctx.state[7] >> (24 - i * 8)) & 0x000000ff;
 	}
 
+	char	buf[65] = {0};
 	for (uint32_t i = 0; i < 32; i++)
-		ft_putnbr_hex_u(hash[i], 0);
+		ft_itoa_hex(buf + i * 2, hash[i]);
 
-	return (NULL);
+	return (ft_strdup(buf));
 }

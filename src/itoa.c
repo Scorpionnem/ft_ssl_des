@@ -1,30 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   print.c                                            :+:      :+:    :+:   */
+/*   itoa.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/02/25 12:08:06 by mbatty            #+#    #+#             */
-/*   Updated: 2026/02/27 21:01:45 by mbatty           ###   ########.fr       */
+/*   Created: 2026/03/01 14:51:56 by mbatty            #+#    #+#             */
+/*   Updated: 2026/03/01 14:52:12 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
-static int	ft_putchar_a(char c)
-{
-	return (write(1, &c, 1));
-}
+#include <stdint.h>
 
 #define LOWER_HEX		"0123456789abcdef"
 
-int	ft_putnbr_hex_u(unsigned long int n, int level)
+static void	ft_itoa_hex_rec(char *buf, uint32_t n, uint32_t level, uint32_t *i)
 {
 	if (n <= 15)
 	{
 		if (level == 0)
-			ft_putchar_a('0');
-		return (ft_putchar_a("0123456789abcdef"[n % 16]));
+		{
+			buf[*i] = '0';
+			(*i)++;
+		}
+		buf[*i] = LOWER_HEX[n % 16];
+		(*i)++;
+		return ;
 	}
-	return (ft_putnbr_hex_u(n / 16, level + 1) + ft_putnbr_hex_u(n % 16, level + 1));
+	ft_itoa_hex_rec(buf, n / 16, level + 1, i);
+	ft_itoa_hex_rec(buf, n % 16, level + 1, i);
+}
+
+void	ft_itoa_hex(char *buf, uint32_t n)
+{
+	uint32_t	i = 0;
+
+	ft_itoa_hex_rec(buf, n, 0, &i);
 }

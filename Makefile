@@ -17,7 +17,7 @@ SRCS :=	main\
 		hash/md5\
 		hash/sha256\
 		hash/dispatch\
-		print\
+		itoa\
 		input\
 
 ###

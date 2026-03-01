@@ -6,7 +6,7 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 12:34:33 by mbatty            #+#    #+#             */
-/*   Updated: 2026/03/01 14:36:01 by mbatty           ###   ########.fr       */
+/*   Updated: 2026/03/01 15:02:13 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,104 +24,6 @@
 #include <sys/stat.h>
 #include <unistd.h>
 #include <errno.h>
-
-int	process(t_ctx *ctx, uint8_t *input, uint32_t len)
-{
-	(void)ctx;
-	(void)input;
-	(void)len;
-	ctx->fn(NULL);
-	return (0);
-}
-
-int	process_av(t_ctx *ctx, char **av)
-{
-	while (*av)
-	{
-		t_input	in;
-
-		if (input_get(&in, INPUT_FILE, *av, 0) == -1)
-		{
-			av++;
-			continue ;
-		}
-
-		if (!ctx->reverse._bool && !ctx->quiet._bool)
-			ft_printf("%s (%s) = ", ctx->fn_str, *av);
-
-		process(ctx, in.bytes, in.size);
-
-		if (ctx->reverse._bool && !ctx->quiet._bool)
-			ft_printf(" %s", *av);
-		ft_printf("\n");
-
-		input_free(&in);
-		av++;
-	}
-	return (0);
-}
-
-int	process_string(t_ctx *ctx, char *str)
-{
-	if (!ctx->reverse._bool && !ctx->quiet._bool)
-		ft_printf("%s (\"%s\") = ", ctx->fn_str, str);
-
-	process(ctx, (uint8_t*)str, ft_strlen(str));
-
-	if (ctx->reverse._bool && !ctx->quiet._bool)
-		ft_printf(" \"%s\"", str);
-	ft_printf("\n");
-
-	return (0);
-}
-
-void	print_no_nl(char *str, uint32_t len)
-{
-	uint32_t	 i = 0;
-	while (i < len)
-	{
-		if (str[i] != '\n')
-			write(1, &str[i], 1);
-		i++;
-	}
-}
-
-int	process_stdin(t_ctx *ctx)
-{
-	t_input	in;
-
-	if (input_get(&in, INPUT_STDIN, NULL, 0) == -1)
-		return (-1);
-
-	if (!ctx->reverse._bool && !ctx->quiet._bool)
-	{
-		if (ctx->echo._bool)
-		{
-			print_no_nl((char*)in.bytes, in.size);
-			printf(" ");
-			fflush(stdout);
-		}
-		else
-			ft_printf("%s (stdin) = ", ctx->fn_str);
-	}
-
-	process(ctx, in.bytes, in.size);
-
-	if (ctx->reverse._bool && !ctx->quiet._bool)
-	{
-		if (ctx->echo._bool)
-		{
-			ft_printf(" ");
-			print_no_nl((char*)in.bytes, in.size);
-		}
-		else
-			ft_printf(" stdin");
-	}
-	ft_printf("\n");
-
-	input_free(&in);
-	return (0);
-}
 
 #define BASE64 "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"
 
@@ -165,14 +67,9 @@ int	main(int UNUSED(ac), char **av)
 	if (ctx_init(&ctx, &av) == -1)
 		return (1);
 
-	int	res = ctx.fn(&ctx);
+	ctx.av = &av;
 
-	// if (ctx.string._str)
-	// 	process_string(&ctx, ctx.string._str);
-	// if (*av)
-	// 	process_av(&ctx, av);
-	// else if (!ctx.string._str || ctx.echo._bool)
-	// 	process_stdin(&ctx);
+	int	res = ctx.fn(&ctx);
 
 	ctx_delete(&ctx);
 	return (res);
