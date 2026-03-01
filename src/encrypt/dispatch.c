@@ -6,7 +6,7 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/01 18:36:24 by mbatty            #+#    #+#             */
-/*   Updated: 2026/03/01 19:13:57 by mbatty           ###   ########.fr       */
+/*   Updated: 2026/03/01 20:37:26 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,15 @@ int	base64_exec(t_ctx *ctx, t_base64_func fn)
 	int		fd;
 
 	if (ctx->input._str)
-		input_get(&in, INPUT_FILE, ctx->input._str, 0);
+	{
+		if (input_get(&in, INPUT_FILE, ctx->input._str, 0) == -1)
+			return (-1);
+	}
 	else
-		input_get(&in, INPUT_STDIN, NULL, 0);
+	{
+		if (input_get(&in, INPUT_STDIN, NULL, 0) == -1)
+			return (-1);
+	}
 
 	if (ctx->output._str)
 	{
