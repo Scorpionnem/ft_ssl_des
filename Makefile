@@ -22,6 +22,7 @@ SRCS :=	main\
 		input\
 		encrypt/base64\
 		encrypt/dispatch\
+		encrypt/des\
 
 ###
 

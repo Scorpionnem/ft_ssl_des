@@ -6,7 +6,7 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 12:34:07 by mbatty            #+#    #+#             */
-/*   Updated: 2026/03/01 18:39:13 by mbatty           ###   ########.fr       */
+/*   Updated: 2026/03/01 19:31:22 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,17 @@ typedef struct	s_ctx
 	t_opt				reverse;
 	t_opt				string;
 
-	// BASE64
+	// BASE64 - DES
 	t_opt				decode;
 	t_opt				encode;
 	t_opt				input;
 	t_opt				output;
+	// DES
+	t_opt				base64_io; // decode/encode the input/output in base64, depending on the encrypt mode
+	t_opt				key;
+	t_opt				password;
+	t_opt				salt;
+	t_opt				init_vector;
 }	t_ctx;
 
 int		ctx_init(t_ctx *ctx, char ***av);

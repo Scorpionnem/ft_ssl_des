@@ -6,7 +6,7 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/21 18:05:50 by mbatty            #+#    #+#             */
-/*   Updated: 2026/03/01 18:49:42 by mbatty           ###   ########.fr       */
+/*   Updated: 2026/03/01 19:43:04 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,18 +87,25 @@ void	print_help()
 	ft_printf("  des\n");
 	ft_printf("  des-ecb\n");
 	ft_printf("  des-cbc\n");
+	ft_printf("\n");
 	ft_printf("Options:\n");
-	ft_printf(" MD5 - SHA256\n");
-	ft_printf("  -h\t\tshow help message and exit\n");
-	ft_printf("  -p\t\techo STDIN to STDOUT and append the checksum to STDOUT\n");
+	ft_printf(" md5 - sha256:\n");
 	ft_printf("  -q\t\tquiet mode\n");
-	ft_printf("  -r\t\treverse the format of the output\n");
 	ft_printf("  -s <string>\tprint the sum of <string>\n");
-	ft_printf(" BASE64\n");
+	ft_printf("  -h\t\tshow help message and exit\n");
+	ft_printf("  -r\t\treverse the format of the output\n");
+	ft_printf("  -p\t\techo STDIN to STDOUT and append the checksum to STDOUT\n");
+	ft_printf(" base64 - des:\n");
 	ft_printf("  -i <string>\tinput file\n");
 	ft_printf("  -o <string>\toutput file\n");
-	ft_printf("  -e\t\tencode mode (default)\n");
-	ft_printf("  -d\t\tdecode mode\n");
+	ft_printf("  -d\t\tdecode/crypt mode\n");
+	ft_printf("  -e\t\tencode/crypt mode (default)\n");
+	ft_printf(" des:\n");
+	ft_printf("  -k <string>\tkey in hex\n");
+	ft_printf("  -s <string>\tsalt in hex\n");
+	ft_printf("  -p <string>\tpassword in ASCII\n");
+	ft_printf("  -v <string>\tinitialization vector\n");
+	ft_printf("  -a\t\tdecode/encode the input/output in base64, depending on the encrypt mode\n");
 	ft_printf("\n");
 }
 
@@ -115,10 +122,16 @@ int	ctx_init_opts(t_ctx *ctx, char ***av)
 	opt_ctx_add_opt(&ctx->opt_ctx, "-e", &ctx->encode, OPT_BOOL);
 	ctx->encode._bool = true;
 	opt_ctx_add_opt(&ctx->opt_ctx, "-d", &ctx->decode, OPT_BOOL);
+	opt_ctx_add_opt(&ctx->opt_ctx, "-a", &ctx->base64_io, OPT_BOOL);
 
 	opt_ctx_add_opt(&ctx->opt_ctx, "-s", &ctx->string, OPT_STR);
 	opt_ctx_add_opt(&ctx->opt_ctx, "-i", &ctx->input, OPT_STR);
 	opt_ctx_add_opt(&ctx->opt_ctx, "-o", &ctx->output, OPT_STR);
+
+	opt_ctx_add_opt(&ctx->opt_ctx, "-k", &ctx->key, OPT_STR);
+	opt_ctx_add_opt(&ctx->opt_ctx, "-p", &ctx->password, OPT_STR);
+	opt_ctx_add_opt(&ctx->opt_ctx, "-s", &ctx->salt, OPT_STR);
+	opt_ctx_add_opt(&ctx->opt_ctx, "-v", &ctx->init_vector, OPT_STR);
 
 	if (opt_ctx_parse(&ctx->opt_ctx, av) == -1)
 	{
