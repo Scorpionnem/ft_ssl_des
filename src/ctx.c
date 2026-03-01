@@ -6,7 +6,7 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/21 18:05:50 by mbatty            #+#    #+#             */
-/*   Updated: 2026/02/27 21:35:58 by mbatty           ###   ########.fr       */
+/*   Updated: 2026/03/01 13:57:30 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ static t_command_func	get_command_func(char *id)
 	#define COMMANDS_COUNT 2
 	const struct {char *id; t_command_func fn;} commands_to_funcs[COMMANDS_COUNT] =
 	{
-		{.id = "md5", .fn = md5},
-		{.id = "sha256", .fn = sha256},
+		{.id = "md5", .fn = md5_dispatch},
+		{.id = "sha256", .fn = sha256_dispatch},
 	};
 
 	for (int i = 0; i < COMMANDS_COUNT; i++)

@@ -6,7 +6,7 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/24 00:02:51 by mbatty            #+#    #+#             */
-/*   Updated: 2026/02/27 21:30:37 by mbatty           ###   ########.fr       */
+/*   Updated: 2026/03/01 14:32:59 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,4 +14,4 @@
 
 #include <stdint.h>
 
-char	*sha256(uint8_t *msg, uint32_t len);
+int	sha256_dispatch(void *ctx);

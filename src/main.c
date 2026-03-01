@@ -6,7 +6,7 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 12:34:33 by mbatty            #+#    #+#             */
-/*   Updated: 2026/02/27 21:33:51 by mbatty           ###   ########.fr       */
+/*   Updated: 2026/03/01 14:36:01 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,16 @@
 #include <unistd.h>
 #include <errno.h>
 
-static int	process(t_ctx *ctx, uint8_t *input, uint32_t len)
+int	process(t_ctx *ctx, uint8_t *input, uint32_t len)
 {
-	ctx->fn(input, len);
+	(void)ctx;
+	(void)input;
+	(void)len;
+	ctx->fn(NULL);
 	return (0);
 }
 
-static int	process_av(t_ctx *ctx, char **av)
+int	process_av(t_ctx *ctx, char **av)
 {
 	while (*av)
 	{
@@ -58,7 +61,7 @@ static int	process_av(t_ctx *ctx, char **av)
 	return (0);
 }
 
-static int	process_string(t_ctx *ctx, char *str)
+int	process_string(t_ctx *ctx, char *str)
 {
 	if (!ctx->reverse._bool && !ctx->quiet._bool)
 		ft_printf("%s (\"%s\") = ", ctx->fn_str, str);
@@ -72,7 +75,7 @@ static int	process_string(t_ctx *ctx, char *str)
 	return (0);
 }
 
-static void	print_no_nl(char *str, uint32_t len)
+void	print_no_nl(char *str, uint32_t len)
 {
 	uint32_t	 i = 0;
 	while (i < len)
@@ -83,7 +86,7 @@ static void	print_no_nl(char *str, uint32_t len)
 	}
 }
 
-static int	process_stdin(t_ctx *ctx)
+int	process_stdin(t_ctx *ctx)
 {
 	t_input	in;
 
@@ -162,13 +165,15 @@ int	main(int UNUSED(ac), char **av)
 	if (ctx_init(&ctx, &av) == -1)
 		return (1);
 
-	if (ctx.string._str)
-		process_string(&ctx, ctx.string._str);
-	if (*av)
-		process_av(&ctx, av);
-	else if (!ctx.string._str || ctx.echo._bool)
-		process_stdin(&ctx);
+	int	res = ctx.fn(&ctx);
+
+	// if (ctx.string._str)
+	// 	process_string(&ctx, ctx.string._str);
+	// if (*av)
+	// 	process_av(&ctx, av);
+	// else if (!ctx.string._str || ctx.echo._bool)
+	// 	process_stdin(&ctx);
 
 	ctx_delete(&ctx);
-	return (0);
+	return (res);
 }

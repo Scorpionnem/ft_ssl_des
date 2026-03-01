@@ -6,7 +6,7 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/24 00:01:19 by mbatty            #+#    #+#             */
-/*   Updated: 2026/02/27 21:30:40 by mbatty           ###   ########.fr       */
+/*   Updated: 2026/03/01 14:33:00 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,4 +14,4 @@
 
 #include <stdint.h>
 
-char	*md5(uint8_t *input, uint32_t len);
+int	md5_dispatch(void *ctx);
