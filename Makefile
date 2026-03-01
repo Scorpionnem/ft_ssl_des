@@ -8,6 +8,7 @@ LFLAGS :=	-lm
 
 INCLUDE_DIRS :=	inc/\
 				inc/hash/\
+				inc/encrypt/\
 				lib/libft/\
 				lib/ft_printf/includes\
 
@@ -19,6 +20,8 @@ SRCS :=	main\
 		hash/dispatch\
 		itoa\
 		input\
+		encrypt/base64\
+		encrypt/dispatch\
 
 ###
 

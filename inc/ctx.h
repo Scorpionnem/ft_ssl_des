@@ -6,7 +6,7 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 12:34:07 by mbatty            #+#    #+#             */
-/*   Updated: 2026/03/01 15:02:04 by mbatty           ###   ########.fr       */
+/*   Updated: 2026/03/01 18:39:13 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 #include "opt.h"
 #include "md5.h"
 #include "sha256.h"
+#include "base64.h"
 
 typedef int (*t_command_func)(void *ctx);
 
@@ -31,10 +32,17 @@ typedef struct	s_ctx
 
 	t_opt				help;
 
+	// MD5 - SHA256
 	t_opt				echo;
 	t_opt				quiet;
 	t_opt				reverse;
 	t_opt				string;
+
+	// BASE64
+	t_opt				decode;
+	t_opt				encode;
+	t_opt				input;
+	t_opt				output;
 }	t_ctx;
 
 int		ctx_init(t_ctx *ctx, char ***av);
