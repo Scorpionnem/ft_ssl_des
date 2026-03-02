@@ -6,7 +6,7 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/02 10:21:53 by mbatty            #+#    #+#             */
-/*   Updated: 2026/03/02 10:29:55 by mbatty           ###   ########.fr       */
+/*   Updated: 2026/03/02 11:43:32 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static int	hex_value(char c)
 uint64_t	ft_atoi_hex(const char *str)
 {
 	int	i;
-	int	nb;
+	uint64_t	nb;
 
 	nb = 0;
 	i = 0;
