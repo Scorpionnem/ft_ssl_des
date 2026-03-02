@@ -6,7 +6,7 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/02 09:46:19 by mbatty            #+#    #+#             */
-/*   Updated: 2026/03/02 10:43:34 by mbatty           ###   ########.fr       */
+/*   Updated: 2026/03/02 10:50:16 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,12 @@ int	des_get_key(t_ctx *ctx, uint64_t *key)
 
 		if (ft_strcmp(pass, pass_verif))
 		{
+			free(pass_verif);
+			free(pass);
 			ft_dprintf(2, "Invalid password: Verify failure\n");
 			return (-1);
 		}
+		free(pass_verif);
 	}
 	else
 		pass = ft_strdup(ctx->password->_str);
@@ -63,6 +66,7 @@ int	des_get_key(t_ctx *ctx, uint64_t *key)
 
 	free(pass);
 	free(md_key);
+	printf("salt =\t%lx\n", salt);
 	return (0);
 }
 
