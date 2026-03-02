@@ -6,7 +6,7 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/21 18:05:50 by mbatty            #+#    #+#             */
-/*   Updated: 2026/03/01 19:43:04 by mbatty           ###   ########.fr       */
+/*   Updated: 2026/03/02 10:44:08 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,13 @@ void	print_help();
 
 static t_command_func	get_command_func(char *id)
 {
-	#define COMMANDS_COUNT 3
+	#define COMMANDS_COUNT 4
 	const struct {char *id; t_command_func fn;} commands_to_funcs[COMMANDS_COUNT] =
 	{
 		{.id = "md5", .fn = md5_dispatch},
 		{.id = "sha256", .fn = sha256_dispatch},
 		{.id = "base64", .fn = base64_dispatch},
+		{.id = "des-ecb", .fn = des_ecb_dispatch},
 	};
 
 	for (int i = 0; i < COMMANDS_COUNT; i++)
@@ -116,7 +117,12 @@ int	ctx_init_opts(t_ctx *ctx, char ***av)
 	opt_ctx_add_opt(&ctx->opt_ctx, "-h", &ctx->help, OPT_BOOL);
 	opt_ctx_add_opt(&ctx->opt_ctx, "--help", &ctx->help, OPT_BOOL);
 
-	opt_ctx_add_opt(&ctx->opt_ctx, "-p", &ctx->echo, OPT_BOOL);
+	// HMMMM YUMMY -p FLAG
+	if ((*av)[1] && (!ft_strcmp((*av)[1], "des") || !ft_strcmp((*av)[1], "des-ecb") || !ft_strcmp((*av)[1], "des-cbc")))
+		opt_ctx_add_opt(&ctx->opt_ctx, "-p", &ctx->echo, OPT_STR);
+	else
+		opt_ctx_add_opt(&ctx->opt_ctx, "-p", &ctx->echo, OPT_BOOL);
+
 	opt_ctx_add_opt(&ctx->opt_ctx, "-q", &ctx->quiet, OPT_BOOL);
 	opt_ctx_add_opt(&ctx->opt_ctx, "-r", &ctx->reverse, OPT_BOOL);
 	opt_ctx_add_opt(&ctx->opt_ctx, "-e", &ctx->encode, OPT_BOOL);
@@ -129,9 +135,11 @@ int	ctx_init_opts(t_ctx *ctx, char ***av)
 	opt_ctx_add_opt(&ctx->opt_ctx, "-o", &ctx->output, OPT_STR);
 
 	opt_ctx_add_opt(&ctx->opt_ctx, "-k", &ctx->key, OPT_STR);
-	opt_ctx_add_opt(&ctx->opt_ctx, "-p", &ctx->password, OPT_STR);
-	opt_ctx_add_opt(&ctx->opt_ctx, "-s", &ctx->salt, OPT_STR);
 	opt_ctx_add_opt(&ctx->opt_ctx, "-v", &ctx->init_vector, OPT_STR);
+
+	// Options collision, need to do ts (yes I couldve done the options after checking the command (might do that actually?))
+	ctx->password = &ctx->echo;
+	ctx->salt = &ctx->string;
 
 	if (opt_ctx_parse(&ctx->opt_ctx, av) == -1)
 	{

@@ -6,7 +6,7 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/24 00:01:23 by mbatty            #+#    #+#             */
-/*   Updated: 2026/03/01 14:59:02 by mbatty           ###   ########.fr       */
+/*   Updated: 2026/03/02 10:16:48 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,6 @@ const uint32_t	S[64] = {
 
 char	*md5(uint8_t *msg, uint32_t len)
 {
-	(void)msg;(void)len;
-
 	uint32_t	number_blocks = ((len + 8) >> 6) + 1;
 	uint32_t	total_length = number_blocks << 6;
 
@@ -142,8 +140,96 @@ char	*md5(uint8_t *msg, uint32_t len)
 
 	char	buf[33] = {0};
 	for (uint32_t i = 0; i < 16; i++)
-	ft_itoa_hex(buf + i * 2, hash[i]);
-	
+		ft_itoa_hex(buf + i * 2, hash[i]);
+
 	free(padding_bytes);
 	return (ft_strdup(buf));
+}
+
+uint64_t	md5_uint64(uint8_t *msg, uint32_t len) // YES, I copied the whole function just for that... I was lazy
+{
+	uint32_t	number_blocks = ((len + 8) >> 6) + 1;
+	uint32_t	total_length = number_blocks << 6;
+
+	uint8_t	*padding_bytes = ft_calloc((total_length - len), sizeof(uint8_t));
+	uint64_t	padding_bytes_size = (total_length - len) * sizeof(uint8_t);
+	padding_bytes[0] = (uint8_t)0x80;
+
+	uint64_t message_length_bits = len << 3;
+	for (uint32_t i = 0; i < 8; ++i )
+	{
+		padding_bytes[padding_bytes_size - 8 + i] = (uint8_t)message_length_bits;
+		message_length_bits >>= 8;
+	}
+
+	uint32_t	a0 = 0x67452301;
+	uint32_t	b0 = 0xefcdab89;
+	uint32_t	c0 = 0x98badcfe;
+	uint32_t	d0 = 0x10325476;
+
+	for (uint32_t c = 0; c < number_blocks; c++)
+	{
+		uint32_t	buffer[16] = {0};
+		uint32_t	index = c << 6;
+
+		for (uint32_t j = 0; j < 64; index++, ++j)
+			buffer[j >> 2] = ((uint32_t)( (index < len) ? msg[index] : padding_bytes[index - len]) << 24) | (buffer[j >> 2] >> 8);
+
+		uint32_t	A = a0;
+		uint32_t	B = b0;
+		uint32_t	C = c0;
+		uint32_t	D = d0;
+
+		for (uint32_t i = 0; i < 64; i++)
+		{
+			uint32_t	F = 0;
+			uint32_t	G = 0;
+
+			if (i <= 15)
+			{
+				F = (B & C) | ((~B) & D);
+				G = i;
+			}
+			else if (i <= 31)
+			{
+				F = (D & B) | ((~D) & C);
+				G = (5 * i + 1) % 16;
+			}
+			else if (i <= 47)
+			{
+				F = B ^ C ^ D;
+				G = (3 * i + 5) % 16;
+			}
+			else if (i <= 63)
+			{
+				F = C ^ (B | (~D));
+				G = (7 * i) % 16;
+			}
+
+			F = F + A + K[i] + buffer[G];
+			A = D;
+			D = C;
+			C = B;
+			B = B + rotl(F, S[i]);
+		}
+		a0 += A;
+		b0 += B;
+		c0 += C;
+		d0 += D;
+	}
+
+	uint8_t	hash[16] = {0};
+	uint32_t count = 0;
+	for (uint32_t i = 0; i < 4; ++i)
+	{
+		uint32_t n = (i == 0) ? a0 : ((i == 1) ? b0 : ((i == 2) ? c0 : d0));
+		for (uint32_t j = 0; j < 4; ++j)
+		{
+			hash[count++] = (uint8_t)(n);
+			n >>= 8;
+		}
+	}
+
+	uint64_t	res = *(uint64_t*)hash;
+	return (res);
 }

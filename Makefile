@@ -20,9 +20,10 @@ SRCS :=	main\
 		hash/dispatch\
 		itoa\
 		input\
-		encrypt/base64\
-		encrypt/dispatch\
-		encrypt/des\
+		encrypt/base64/base64\
+		encrypt/base64/dispatch\
+		encrypt/des/des_ecb\
+		encrypt/des/dispatch\
 
 ###
 

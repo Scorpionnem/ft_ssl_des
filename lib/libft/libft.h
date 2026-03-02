@@ -6,7 +6,7 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 08:48:50 by mbatty            #+#    #+#             */
-/*   Updated: 2025/10/27 09:50:47 by mbatty           ###   ########.fr       */
+/*   Updated: 2026/03/02 10:24:49 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define LIBFT_H
 
 # include <stdlib.h>
+# include <stdint.h>
 
 typedef struct s_list
 {
@@ -22,6 +23,7 @@ typedef struct s_list
 }	t_list;
 
 int		ft_atoi(const char *nptr);
+uint64_t	ft_atoi_hex(const char *str);
 void	ft_bzero(void *s, size_t n);
 int		ft_isalnum(int c);
 int		ft_isalpha(int c);

@@ -6,7 +6,7 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 12:34:07 by mbatty            #+#    #+#             */
-/*   Updated: 2026/03/01 19:31:22 by mbatty           ###   ########.fr       */
+/*   Updated: 2026/03/02 10:34:42 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 #include "md5.h"
 #include "sha256.h"
 #include "base64.h"
+#include "des.h"
 
 typedef int (*t_command_func)(void *ctx);
 
@@ -46,12 +47,10 @@ typedef struct	s_ctx
 	// DES
 	t_opt				base64_io; // decode/encode the input/output in base64, depending on the encrypt mode
 	t_opt				key;
-	t_opt				password;
-	t_opt				salt;
+	t_opt				*password;
+	t_opt				*salt;
 	t_opt				init_vector;
 }	t_ctx;
 
 int		ctx_init(t_ctx *ctx, char ***av);
 void	ctx_delete(t_ctx *ctx);
-
-int	ft_putnbr_hex_u(unsigned long int n, int level);
