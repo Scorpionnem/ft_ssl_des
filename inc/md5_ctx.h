@@ -1,56 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ctx.h                                              :+:      :+:    :+:   */
+/*   md5_ctx.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 12:34:07 by mbatty            #+#    #+#             */
-/*   Updated: 2026/03/02 10:34:42 by mbatty           ###   ########.fr       */
+/*   Updated: 2026/03/24 18:05:49 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
 
-#define UNUSED(x)	_unused_##x __attribute__((unused))
-
 #include "opt.h"
-#include "md5.h"
-#include "sha256.h"
-#include "base64.h"
-#include "des.h"
 
-typedef int (*t_command_func)(void *ctx);
-
-typedef struct	s_ctx
+typedef struct	s_md5_ctx
 {
 	char	***av;
-
-	t_command_func	fn;
-	char		*fn_str;
 
 	t_opt_ctx			opt_ctx;
 
 	t_opt				help;
 
-	// MD5 - SHA256
 	t_opt				echo;
 	t_opt				quiet;
 	t_opt				reverse;
 	t_opt				string;
+}	t_md5_ctx;
 
-	// BASE64 - DES
-	t_opt				decode;
-	t_opt				encode;
-	t_opt				input;
-	t_opt				output;
-	// DES
-	t_opt				base64_io; // decode/encode the input/output in base64, depending on the encrypt mode
-	t_opt				key;
-	t_opt				*password;
-	t_opt				*salt;
-	t_opt				init_vector;
-}	t_ctx;
-
-int		ctx_init(t_ctx *ctx, char ***av);
-void	ctx_delete(t_ctx *ctx);
+int		md5_ctx_init(t_md5_ctx *ctx, char ***av);
+void	md5_ctx_delete(t_md5_ctx *ctx);

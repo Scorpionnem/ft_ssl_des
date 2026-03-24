@@ -14,18 +14,12 @@ INCLUDE_DIRS :=	inc/\
 
 SRCS :=	main\
 		commands/md5/main\
+		commands/md5/ctx\
+		commands/md5/md5\
 		commands/sha256/main\
 		opt\
-		ctx\
-		hash/md5\
-		hash/sha256\
-		hash/dispatch\
-		itoa\
 		input\
-		encrypt/base64/base64\
-		encrypt/base64/dispatch\
-		encrypt/des/des_ecb\
-		encrypt/des/dispatch\
+		itoa\
 
 ###
 

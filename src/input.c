@@ -6,12 +6,11 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/27 21:05:11 by mbatty            #+#    #+#             */
-/*   Updated: 2026/02/27 21:27:59 by mbatty           ###   ########.fr       */
+/*   Updated: 2026/03/24 18:09:09 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "input.h"
-#include "ctx.h"
 #include "ft_printf.h"
 #include "libft.h"
 

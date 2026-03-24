@@ -6,7 +6,7 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/24 00:01:23 by mbatty            #+#    #+#             */
-/*   Updated: 2026/03/24 18:17:13 by mbatty           ###   ########.fr       */
+/*   Updated: 2026/03/24 18:17:57 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@
 #include <math.h>
 #include <string.h>
 #include <stdio.h>
+
+void	ft_itoa_hex(char *buf, uint32_t n);
 
 static uint32_t rotl(uint32_t value, uint32_t shift)
 {
