@@ -6,7 +6,7 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 13:39:45 by mbatty            #+#    #+#             */
-/*   Updated: 2026/02/25 11:50:11 by mbatty           ###   ########.fr       */
+/*   Updated: 2026/02/27 21:01:23 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	ft_putnbr_hex(long n, char *set)
 
 static int	ft_putnbr_hex_u(unsigned long int n, char *set)
 {
-	if (n >= 0 && n <= 15)
+	if (n <= 15)
 		return (ft_putchar(set[n % 16]));
 	return (ft_putnbr_hex_u(n / 16, set) + ft_putnbr_hex_u(n % 16, set));
 }

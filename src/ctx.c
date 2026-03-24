@@ -6,7 +6,7 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/21 18:05:50 by mbatty            #+#    #+#             */
-/*   Updated: 2026/02/25 12:30:24 by mbatty           ###   ########.fr       */
+/*   Updated: 2026/03/02 10:44:08 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,15 @@
 int		ctx_init_opts(t_ctx *ctx, char ***av);
 void	print_help();
 
-static t_hash_func	get_hash_func(char *id)
+static t_command_func	get_command_func(char *id)
 {
-	#define COMMANDS_COUNT 2
-	const struct {char *id; t_hash_func fn;} commands_to_funcs[COMMANDS_COUNT] =
+	#define COMMANDS_COUNT 4
+	const struct {char *id; t_command_func fn;} commands_to_funcs[COMMANDS_COUNT] =
 	{
-		{.id = "md5", .fn = md5},
-		{.id = "sha256", .fn = sha256},
+		{.id = "md5", .fn = md5_dispatch},
+		{.id = "sha256", .fn = sha256_dispatch},
+		{.id = "base64", .fn = base64_dispatch},
+		{.id = "des-ecb", .fn = des_ecb_dispatch},
 	};
 
 	for (int i = 0; i < COMMANDS_COUNT; i++)
@@ -52,7 +54,7 @@ int	ctx_init(t_ctx *ctx, char ***av)
 		ft_dprintf(2, "ft_ssl: command required (see -h)\n");
 		return (-1);
 	}
-	ctx->fn = get_hash_func(*av[0]);
+	ctx->fn = get_command_func(*av[0]);
 	if (ctx->fn == NULL)
 	{
 		opt_ctx_delete(&ctx->opt_ctx);
@@ -82,13 +84,29 @@ void	print_help()
 	ft_printf("  sha256\n");
 	ft_printf("\n");
 	ft_printf("Cipher commands:\n");
+	ft_printf("  base64\n");
+	ft_printf("  des\n");
+	ft_printf("  des-ecb\n");
+	ft_printf("  des-cbc\n");
 	ft_printf("\n");
 	ft_printf("Options:\n");
-	ft_printf("  -h\t\tshow help message and exit\n");
-	ft_printf("  -p\t\techo STDIN to STDOUT and append the checksum to STDOUT\n");
+	ft_printf(" md5 - sha256:\n");
 	ft_printf("  -q\t\tquiet mode\n");
-	ft_printf("  -r\t\treverse the format of the output\n");
 	ft_printf("  -s <string>\tprint the sum of <string>\n");
+	ft_printf("  -h\t\tshow help message and exit\n");
+	ft_printf("  -r\t\treverse the format of the output\n");
+	ft_printf("  -p\t\techo STDIN to STDOUT and append the checksum to STDOUT\n");
+	ft_printf(" base64 - des:\n");
+	ft_printf("  -i <string>\tinput file\n");
+	ft_printf("  -o <string>\toutput file\n");
+	ft_printf("  -d\t\tdecode/crypt mode\n");
+	ft_printf("  -e\t\tencode/crypt mode (default)\n");
+	ft_printf(" des:\n");
+	ft_printf("  -k <string>\tkey in hex\n");
+	ft_printf("  -s <string>\tsalt in hex\n");
+	ft_printf("  -p <string>\tpassword in ASCII\n");
+	ft_printf("  -v <string>\tinitialization vector\n");
+	ft_printf("  -a\t\tdecode/encode the input/output in base64, depending on the encrypt mode\n");
 	ft_printf("\n");
 }
 
@@ -99,11 +117,29 @@ int	ctx_init_opts(t_ctx *ctx, char ***av)
 	opt_ctx_add_opt(&ctx->opt_ctx, "-h", &ctx->help, OPT_BOOL);
 	opt_ctx_add_opt(&ctx->opt_ctx, "--help", &ctx->help, OPT_BOOL);
 
-	opt_ctx_add_opt(&ctx->opt_ctx, "-p", &ctx->echo, OPT_BOOL);
+	// HMMMM YUMMY -p FLAG
+	if ((*av)[1] && (!ft_strcmp((*av)[1], "des") || !ft_strcmp((*av)[1], "des-ecb") || !ft_strcmp((*av)[1], "des-cbc")))
+		opt_ctx_add_opt(&ctx->opt_ctx, "-p", &ctx->echo, OPT_STR);
+	else
+		opt_ctx_add_opt(&ctx->opt_ctx, "-p", &ctx->echo, OPT_BOOL);
+
 	opt_ctx_add_opt(&ctx->opt_ctx, "-q", &ctx->quiet, OPT_BOOL);
 	opt_ctx_add_opt(&ctx->opt_ctx, "-r", &ctx->reverse, OPT_BOOL);
+	opt_ctx_add_opt(&ctx->opt_ctx, "-e", &ctx->encode, OPT_BOOL);
+	ctx->encode._bool = true;
+	opt_ctx_add_opt(&ctx->opt_ctx, "-d", &ctx->decode, OPT_BOOL);
+	opt_ctx_add_opt(&ctx->opt_ctx, "-a", &ctx->base64_io, OPT_BOOL);
 
 	opt_ctx_add_opt(&ctx->opt_ctx, "-s", &ctx->string, OPT_STR);
+	opt_ctx_add_opt(&ctx->opt_ctx, "-i", &ctx->input, OPT_STR);
+	opt_ctx_add_opt(&ctx->opt_ctx, "-o", &ctx->output, OPT_STR);
+
+	opt_ctx_add_opt(&ctx->opt_ctx, "-k", &ctx->key, OPT_STR);
+	opt_ctx_add_opt(&ctx->opt_ctx, "-v", &ctx->init_vector, OPT_STR);
+
+	// Options collision, need to do ts (yes I couldve done the options after checking the command (might do that actually?))
+	ctx->password = &ctx->echo;
+	ctx->salt = &ctx->string;
 
 	if (opt_ctx_parse(&ctx->opt_ctx, av) == -1)
 	{
