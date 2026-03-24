@@ -6,7 +6,7 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/21 18:05:50 by mbatty            #+#    #+#             */
-/*   Updated: 2026/03/02 10:44:08 by mbatty           ###   ########.fr       */
+/*   Updated: 2026/03/24 17:54:19 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	ctx_init(t_ctx *ctx, char ***av)
 	if (ctx->help._bool)
 	{
 		opt_ctx_delete(&ctx->opt_ctx);
-		print_help();
+		// print_help();
 		return (-1);
 	}
 
@@ -72,42 +72,6 @@ void	ctx_delete(t_ctx *ctx)
 {
 	free(ctx->fn_str);
 	opt_ctx_delete(&ctx->opt_ctx);
-}
-
-void	print_help()
-{
-	ft_printf("\nUsage:\n  ./ft_ssl <command> [options]\n\n");
-	ft_printf("Standard commands:\n");
-	ft_printf("\n");
-	ft_printf("Message Digest commands:\n");
-	ft_printf("  md5\n");
-	ft_printf("  sha256\n");
-	ft_printf("\n");
-	ft_printf("Cipher commands:\n");
-	ft_printf("  base64\n");
-	ft_printf("  des\n");
-	ft_printf("  des-ecb\n");
-	ft_printf("  des-cbc\n");
-	ft_printf("\n");
-	ft_printf("Options:\n");
-	ft_printf(" md5 - sha256:\n");
-	ft_printf("  -q\t\tquiet mode\n");
-	ft_printf("  -s <string>\tprint the sum of <string>\n");
-	ft_printf("  -h\t\tshow help message and exit\n");
-	ft_printf("  -r\t\treverse the format of the output\n");
-	ft_printf("  -p\t\techo STDIN to STDOUT and append the checksum to STDOUT\n");
-	ft_printf(" base64 - des:\n");
-	ft_printf("  -i <string>\tinput file\n");
-	ft_printf("  -o <string>\toutput file\n");
-	ft_printf("  -d\t\tdecode/crypt mode\n");
-	ft_printf("  -e\t\tencode/crypt mode (default)\n");
-	ft_printf(" des:\n");
-	ft_printf("  -k <string>\tkey in hex\n");
-	ft_printf("  -s <string>\tsalt in hex\n");
-	ft_printf("  -p <string>\tpassword in ASCII\n");
-	ft_printf("  -v <string>\tinitialization vector\n");
-	ft_printf("  -a\t\tdecode/encode the input/output in base64, depending on the encrypt mode\n");
-	ft_printf("\n");
 }
 
 int	ctx_init_opts(t_ctx *ctx, char ***av)

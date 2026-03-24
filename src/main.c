@@ -6,36 +6,57 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 12:34:33 by mbatty            #+#    #+#             */
-/*   Updated: 2026/03/01 18:36:02 by mbatty           ###   ########.fr       */
+/*   Updated: 2026/03/24 18:02:18 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ctx.h"
-#include "ft_printf.h"
 #include "libft.h"
-#include "input.h"
+#include "ft_printf.h"
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <signal.h>
-#include <fcntl.h>
-#include <sys/mman.h>
-#include <sys/stat.h>
-#include <unistd.h>
-#include <errno.h>
+#define MAIN_HELP_STRING "\
+\nUsage:\n  ./ft_ssl <command> [options]\n\n\
+Standard commands:\n\
+\n\
+Message Digest commands:\n\
+  md5\n\
+  sha256\n\
+\n\
+Cipher commands:\n\
+  base64\n\
+  des\n\
+  des-ecb\n\
+  des-cbc\n\
+\n\
+"
 
-int	main(int UNUSED(ac), char **av)
+int	md5_main(char **av);
+int	sha256_main(char **av);
+
+typedef int (*t_command_func)(char **av);
+static t_command_func	get_command_func(char *id)
 {
-	t_ctx	ctx;
+	#define COMMANDS_COUNT 3
+	const struct {char *id; t_command_func fn;} cmds_map[COMMANDS_COUNT] =
+	{
+		{.id = "md5", .fn = md5_main},
+		{.id = "sha256", .fn = sha256_main},
+		{.id = "base64", .fn = NULL},
+	};
 
-	if (ctx_init(&ctx, &av) == -1)
-		return (1);
+	for (int i = 0; i < COMMANDS_COUNT; i++)
+		if (!ft_strcmp(cmds_map[i].id, id))
+			return (cmds_map[i].fn);
+	return (NULL);
+}
 
-	ctx.av = &av;
+int	main(int ac, char **av)
+{
+	if (ac < 2)
+		return (ft_dprintf(2, MAIN_HELP_STRING), 1);
 
-	int	res = ctx.fn(&ctx);
+	t_command_func	fn = get_command_func(av[1]);
+	if (!fn)
+		return (ft_dprintf(2, "ft_ssl: Unknown command: %s\n" MAIN_HELP_STRING, av[1]), 1);
 
-	ctx_delete(&ctx);
-	return (res);
+	return (fn(av + 1));
 }

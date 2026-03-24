@@ -13,6 +13,8 @@ INCLUDE_DIRS :=	inc/\
 				lib/ft_printf/includes\
 
 SRCS :=	main\
+		commands/md5/main\
+		commands/sha256/main\
 		opt\
 		ctx\
 		hash/md5\
