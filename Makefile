@@ -21,6 +21,8 @@ SRCS :=	main\
 		commands/base64/main\
 		commands/base64/ctx\
 		commands/base64/base64\
+		commands/des_ecb/main\
+		commands/des_ecb/ctx\
 		opt\
 		input\
 
