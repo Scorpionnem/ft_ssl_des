@@ -6,7 +6,7 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/24 00:01:23 by mbatty            #+#    #+#             */
-/*   Updated: 2026/03/25 10:25:18 by mbatty           ###   ########.fr       */
+/*   Updated: 2026/03/25 10:36:28 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,7 +138,7 @@ char	*md5(uint8_t *msg, uint64_t len)
 		}
 	}
 
-	char	*buf = malloc(33 * sizeof(char));
+	char	*buf = ft_calloc(33, sizeof(char));
 	for (uint32_t i = 0; i < 16; i++)
 		ft_itoa_hex(buf + i * 2, hash[i]);
 
