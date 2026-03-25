@@ -6,7 +6,7 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/27 21:05:11 by mbatty            #+#    #+#             */
-/*   Updated: 2026/03/24 18:09:09 by mbatty           ###   ########.fr       */
+/*   Updated: 2026/03/25 10:37:40 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,10 @@ int	input_free(t_input *in)
 	switch (in->type)
 	{
 		case INPUT_STR:
+		{
+			free(in->bytes);
+			break ;
+		}
 		case INPUT_STDIN:
 		{
 			free(in->bytes);
