@@ -6,7 +6,7 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 08:48:50 by mbatty            #+#    #+#             */
-/*   Updated: 2026/03/02 10:24:49 by mbatty           ###   ########.fr       */
+/*   Updated: 2026/03/25 10:24:42 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,5 +70,6 @@ void	ft_lstclear(t_list **lst, void (*del)(void *));
 void	ft_lstiter(t_list *lst, void (*f)(void *));
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
 void	free_2d(char **str);
+void	ft_itoa_hex(char *buf, uint32_t n);
 
 #endif

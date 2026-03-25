@@ -6,12 +6,11 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/24 00:01:23 by mbatty            #+#    #+#             */
-/*   Updated: 2026/03/24 18:17:57 by mbatty           ###   ########.fr       */
+/*   Updated: 2026/03/25 10:25:18 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "md5.h"
-#include "itoa.h"
 #include "libft.h"
 
 #include <stdlib.h>
@@ -55,7 +54,7 @@ const uint32_t	S[64] = {
 	6, 10, 15, 21, 6, 10, 15, 21, 6, 10, 15, 21, 6, 10, 15, 21,
 };
 
-char	*md5(uint8_t *msg, uint32_t len)
+char	*md5(uint8_t *msg, uint64_t len)
 {
 	uint32_t	number_blocks = ((len + 8) >> 6) + 1;
 	uint32_t	total_length = number_blocks << 6;

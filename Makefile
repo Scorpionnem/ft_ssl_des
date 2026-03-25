@@ -7,8 +7,7 @@ LFLAGS :=	-lm
 ###
 
 INCLUDE_DIRS :=	inc/\
-				inc/hash/\
-				inc/encrypt/\
+				inc/commands\
 				lib/libft/\
 				lib/ft_printf/includes\
 
@@ -17,9 +16,10 @@ SRCS :=	main\
 		commands/md5/ctx\
 		commands/md5/md5\
 		commands/sha256/main\
+		commands/sha256/ctx\
+		commands/sha256/sha256\
 		opt\
 		input\
-		itoa\
 
 ###
 

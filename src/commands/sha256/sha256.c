@@ -6,14 +6,12 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/24 00:03:21 by mbatty            #+#    #+#             */
-/*   Updated: 2026/03/01 14:58:24 by mbatty           ###   ########.fr       */
+/*   Updated: 2026/03/25 10:25:31 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sha256.h"
 #include "libft.h"
-#include "ctx.h"
-#include "itoa.h"
 #include "ft_printf.h"
 #include <stdlib.h>
 #include <string.h>
@@ -91,7 +89,7 @@ static void	sha256_transform(t_sha256_ctx *ctx, uint8_t *data)
 	ctx->state[7] += h;
 }
 
-char	*sha256(uint8_t *msg, uint32_t len)
+char	*sha256(uint8_t *msg, uint64_t len)
 {
 	t_sha256_ctx	ctx;
 
@@ -106,7 +104,7 @@ char	*sha256(uint8_t *msg, uint32_t len)
 	ctx.state[6] = 0x1f83d9ab;
 	ctx.state[7] = 0x5be0cd19;
 
-	for (uint32_t i = 0; i < len; i++)
+	for (uint64_t i = 0; i < len; i++)
 	{
 		ctx.data[ctx.data_len] = msg[i];
 		ctx.data_len++;

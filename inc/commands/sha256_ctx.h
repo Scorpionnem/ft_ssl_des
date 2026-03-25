@@ -1,17 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sha256.h                                           :+:      :+:    :+:   */
+/*   sha256_ctx.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/02/24 00:02:51 by mbatty            #+#    #+#             */
-/*   Updated: 2026/03/01 14:32:59 by mbatty           ###   ########.fr       */
+/*   Created: 2026/02/20 12:34:07 by mbatty            #+#    #+#             */
+/*   Updated: 2026/03/25 10:22:02 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
 
-#include <stdint.h>
+#include "opt.h"
 
-int	sha256_dispatch(void *ctx);
+typedef struct	s_sha256_ctx
+{
+	char	***av;
+
+	t_opt_ctx			opt_ctx;
+
+	t_opt				help;
+
+	t_opt				echo;
+	t_opt				quiet;
+	t_opt				reverse;
+	t_opt				string;
+}	t_sha256_ctx;
+
+int		sha256_ctx_init(t_sha256_ctx *ctx, char ***av);
+void	sha256_ctx_delete(t_sha256_ctx *ctx);

@@ -6,7 +6,7 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/24 17:57:01 by mbatty            #+#    #+#             */
-/*   Updated: 2026/03/24 18:23:39 by mbatty           ###   ########.fr       */
+/*   Updated: 2026/03/25 10:20:01 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,57 @@
 #include "input.h"
 #include <stdint.h>
 
-char	*md5(uint8_t *msg, uint32_t len);
+char	*md5(uint8_t *msg, uint64_t len);
 
-int	process_files(t_md5_ctx *ctx, char **av)
+static void	print_no_nl(char *str, uint32_t len)
+{
+	uint32_t	 i = 0;
+	while (i < len)
+	{
+		if (str[i] != '\n')
+			ft_printf("%c", str[i]);
+		i++;
+	}
+}
+
+static int	process_stdin(t_md5_ctx *ctx)
+{
+	t_input	in;
+
+	if (input_get(&in, INPUT_STDIN, NULL, 0) == -1)
+		return (-1);
+
+	char	*h = md5(in.bytes, in.size);
+
+	if (!ctx->reverse._bool && !ctx->quiet._bool)
+	{
+		if (ctx->echo._bool)
+		{
+			print_no_nl((char*)in.bytes, in.size);
+			ft_printf(" %s\n", h);
+		}
+		else
+			ft_printf("MD5 (stdin) = %s\n", h);
+	}
+
+	if (ctx->reverse._bool && !ctx->quiet._bool)
+	{
+		if (ctx->echo._bool)
+		{
+			ft_printf("%s ", h);
+			print_no_nl((char*)in.bytes, in.size);
+			ft_printf("\n");
+		}
+		else
+			ft_printf("%s stdin\n", h);
+	}
+
+	free(h);
+	input_free(&in);
+	return (0);
+}
+
+static int	process_files(t_md5_ctx *ctx, char **av)
 {
 	while (*av)
 	{
@@ -44,7 +92,7 @@ int	process_files(t_md5_ctx *ctx, char **av)
 	return (0);
 }
 
-int	process_string(t_md5_ctx *ctx, char *str)
+static int	process_string(t_md5_ctx *ctx, char *str)
 {
 	char	*hash_str = md5((uint8_t*)str, ft_strlen(str));
 	if (!hash_str)
@@ -70,6 +118,8 @@ int	md5_main(char **av)
 		process_string(&ctx, ctx.string._str);
 	if (*av)
 		process_files(&ctx, av);
+	else if (!ctx.string._str || ctx.echo._bool)
+		process_stdin(&ctx);
 
 	md5_ctx_delete(&ctx);
 	return (0);
