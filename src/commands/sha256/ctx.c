@@ -6,7 +6,7 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/24 18:05:57 by mbatty            #+#    #+#             */
-/*   Updated: 2026/03/25 10:22:21 by mbatty           ###   ########.fr       */
+/*   Updated: 2026/03/25 10:41:58 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,14 @@
 
 int	sha256_ctx_init_opts(t_sha256_ctx *ctx, char ***av);
 
-#define sha256_HELP_STRING "\
+#define SHA256_HELP_STRING "\
 \n\
 Usage:\n  ./ft_ssl sha256 [options]\n\
 \n\
 Options:\n\
+  -h\t\tshow help message and exit\n\
   -q\t\tquiet mode\n\
   -s <string>\tprint the sum of <string>\n\
-  -h\t\tshow help message and exit\n\
   -r\t\treverse the format of the output\n\
   -p\t\techo STDIN to STDOUT and append the checksum to STDOUT\n\
 \n\
@@ -36,7 +36,7 @@ int	sha256_ctx_init(t_sha256_ctx *ctx, char ***av)
 	if (ctx->help._bool)
 	{
 		opt_ctx_delete(&ctx->opt_ctx);
-		ft_dprintf(2, sha256_HELP_STRING);
+		ft_dprintf(2, SHA256_HELP_STRING);
 		return (-1);
 	}
 

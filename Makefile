@@ -18,6 +18,9 @@ SRCS :=	main\
 		commands/sha256/main\
 		commands/sha256/ctx\
 		commands/sha256/sha256\
+		commands/base64/main\
+		commands/base64/ctx\
+		commands/base64/base64\
 		opt\
 		input\
 

@@ -1,33 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   dispatch.c                                         :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/03/01 18:36:24 by mbatty            #+#    #+#             */
-/*   Updated: 2026/03/01 20:37:26 by mbatty           ###   ########.fr       */
+/*   Created: 2026/03/25 10:38:37 by mbatty            #+#    #+#             */
+/*   Updated: 2026/03/25 10:49:35 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ctx.h"
-#include "base64.h"
-#include "libft.h"
-#include "ft_printf.h"
+#include "base64_ctx.h"
 #include "input.h"
-
-#include <stdlib.h>
+#include "ft_printf.h"
 #include <fcntl.h>
-#include <unistd.h>
-#include <errno.h>
+#include <stdlib.h>
 #include <string.h>
+#include <errno.h>
+#include <unistd.h>
+#include <stdint.h>
 
 void	base64_encode(int fd, uint8_t *input, uint64_t len);
 void	base64_decode(int fd, uint8_t *input, uint64_t len);
 
 typedef void(*t_base64_func)(int, uint8_t*, uint64_t);
 
-int	base64_exec(t_ctx *ctx, t_base64_func fn)
+int	base64_exec(t_base64_ctx *ctx, t_base64_func fn)
 {
 	t_input	in;
 	int		fd;
@@ -63,13 +61,18 @@ int	base64_exec(t_ctx *ctx, t_base64_func fn)
 	return (0);
 }
 
-int	base64_dispatch(void *ctx_ptr)
+int	base64_main(char **av)
 {
-	t_ctx	*ctx = ctx_ptr;
+	t_base64_ctx	ctx;
 
-	if (ctx->encode._bool && !ctx->decode._bool)
-		return (base64_exec(ctx, base64_encode));
-	else if (ctx->decode._bool)
-		return (base64_exec(ctx, base64_decode));
-	return (0);
+	if (base64_ctx_init(&ctx, &av) == -1)
+		return (1);
+
+	if (ctx.encode._bool && !ctx.decode._bool)
+		base64_exec(&ctx, base64_encode);
+	else if (ctx.decode._bool)
+		base64_exec(&ctx, base64_decode);
+
+	base64_ctx_delete(&ctx);
+	return (1);
 }

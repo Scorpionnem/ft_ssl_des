@@ -5,12 +5,11 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/03/01 18:34:23 by mbatty            #+#    #+#             */
-/*   Updated: 2026/03/01 19:34:27 by mbatty           ###   ########.fr       */
+/*   Created: 2026/03/25 10:38:41 by mbatty            #+#    #+#             */
+/*   Updated: 2026/03/25 10:46:14 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "base64.h"
 #include "ft_printf.h"
 #include "libft.h"
 

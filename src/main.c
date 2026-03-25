@@ -6,7 +6,7 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 12:34:33 by mbatty            #+#    #+#             */
-/*   Updated: 2026/03/24 18:02:18 by mbatty           ###   ########.fr       */
+/*   Updated: 2026/03/25 10:42:19 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ Cipher commands:\n\
 
 int	md5_main(char **av);
 int	sha256_main(char **av);
+int	base64_main(char **av);
 
 typedef int (*t_command_func)(char **av);
 static t_command_func	get_command_func(char *id)
@@ -40,7 +41,7 @@ static t_command_func	get_command_func(char *id)
 	{
 		{.id = "md5", .fn = md5_main},
 		{.id = "sha256", .fn = sha256_main},
-		{.id = "base64", .fn = NULL},
+		{.id = "base64", .fn = base64_main},
 	};
 
 	for (int i = 0; i < COMMANDS_COUNT; i++)

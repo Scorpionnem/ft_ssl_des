@@ -6,11 +6,10 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/24 00:03:21 by mbatty            #+#    #+#             */
-/*   Updated: 2026/03/25 10:36:52 by mbatty           ###   ########.fr       */
+/*   Updated: 2026/03/25 10:42:04 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "sha256.h"
 #include "libft.h"
 #include "ft_printf.h"
 #include <stdlib.h>
