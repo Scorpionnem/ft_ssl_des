@@ -6,11 +6,10 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/24 00:01:23 by mbatty            #+#    #+#             */
-/*   Updated: 2026/03/25 10:36:28 by mbatty           ###   ########.fr       */
+/*   Updated: 2026/03/26 14:03:20 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "md5.h"
 #include "libft.h"
 
 #include <stdlib.h>
@@ -54,7 +53,7 @@ const uint32_t	S[64] = {
 	6, 10, 15, 21, 6, 10, 15, 21, 6, 10, 15, 21, 6, 10, 15, 21,
 };
 
-char	*md5(uint8_t *msg, uint64_t len)
+void	md5(uint8_t *msg, uint64_t len, uint8_t buf[16])
 {
 	uint32_t	number_blocks = ((len + 8) >> 6) + 1;
 	uint32_t	total_length = number_blocks << 6;
@@ -138,10 +137,6 @@ char	*md5(uint8_t *msg, uint64_t len)
 		}
 	}
 
-	char	*buf = ft_calloc(33, sizeof(char));
-	for (uint32_t i = 0; i < 16; i++)
-		ft_itoa_hex(buf + i * 2, hash[i]);
-
+	memcpy(buf, hash, 16);
 	free(padding_bytes);
-	return (buf);
 }

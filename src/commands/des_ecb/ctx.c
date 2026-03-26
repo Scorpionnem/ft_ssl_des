@@ -6,7 +6,7 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/24 18:05:57 by mbatty            #+#    #+#             */
-/*   Updated: 2026/03/25 21:21:57 by mbatty           ###   ########.fr       */
+/*   Updated: 2026/03/26 14:07:48 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,17 +76,17 @@ int	des_ecb_ctx_init_opts(t_des_ecb_ctx *ctx, char ***av)
 	opt_ctx_add_opt(&ctx->opt_ctx, "-o", &ctx->output, OPT_STR);
 	opt_ctx_add_opt(&ctx->opt_ctx, "--output", &ctx->output, OPT_STR);
 
-	opt_ctx_add_opt(&ctx->opt_ctx, "-k", &ctx->key, OPT_STR);
-	opt_ctx_add_opt(&ctx->opt_ctx, "--key", &ctx->key, OPT_STR);
+	opt_ctx_add_opt(&ctx->opt_ctx, "-k", &ctx->key_opt, OPT_STR);
+	opt_ctx_add_opt(&ctx->opt_ctx, "--key", &ctx->key_opt, OPT_STR);
 
-	opt_ctx_add_opt(&ctx->opt_ctx, "-p", &ctx->password, OPT_STR);
-	opt_ctx_add_opt(&ctx->opt_ctx, "--password", &ctx->password, OPT_STR);
+	opt_ctx_add_opt(&ctx->opt_ctx, "-p", &ctx->password_opt, OPT_STR);
+	opt_ctx_add_opt(&ctx->opt_ctx, "--password", &ctx->password_opt, OPT_STR);
 
-	opt_ctx_add_opt(&ctx->opt_ctx, "-s", &ctx->salt, OPT_STR);
-	opt_ctx_add_opt(&ctx->opt_ctx, "--salt", &ctx->salt, OPT_STR);
+	opt_ctx_add_opt(&ctx->opt_ctx, "-s", &ctx->salt_opt, OPT_STR);
+	opt_ctx_add_opt(&ctx->opt_ctx, "--salt", &ctx->salt_opt, OPT_STR);
 
-	opt_ctx_add_opt(&ctx->opt_ctx, "-v", &ctx->init_vector, OPT_STR);
-	opt_ctx_add_opt(&ctx->opt_ctx, "--vector", &ctx->init_vector, OPT_STR);
+	opt_ctx_add_opt(&ctx->opt_ctx, "-v", &ctx->init_vector_opt, OPT_STR);
+	opt_ctx_add_opt(&ctx->opt_ctx, "--vector", &ctx->init_vector_opt, OPT_STR);
 
 	if (opt_ctx_parse(&ctx->opt_ctx, av) == -1)
 	{
