@@ -6,13 +6,14 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/25 10:38:37 by mbatty            #+#    #+#             */
-/*   Updated: 2026/03/25 10:49:35 by mbatty           ###   ########.fr       */
+/*   Updated: 2026/03/28 10:32:33 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "base64_ctx.h"
 #include "input.h"
 #include "ft_printf.h"
+#include "libft.h"
 #include <fcntl.h>
 #include <stdlib.h>
 #include <string.h>
@@ -68,10 +69,20 @@ int	base64_main(char **av)
 	if (base64_ctx_init(&ctx, &av) == -1)
 		return (1);
 
-	if (ctx.encode._bool && !ctx.decode._bool)
-		base64_exec(&ctx, base64_encode);
-	else if (ctx.decode._bool)
-		base64_exec(&ctx, base64_decode);
+	if (ctx.string._str)
+	{
+		if (ctx.encode._bool && !ctx.decode._bool)
+			base64_encode(1, (uint8_t*)ctx.string._str, ft_strlen(ctx.string._str));
+		else if (ctx.decode._bool)
+			base64_decode(1, (uint8_t*)ctx.string._str, ft_strlen(ctx.string._str));
+	}
+	else
+	{
+		if (ctx.encode._bool && !ctx.decode._bool)
+			base64_exec(&ctx, base64_encode);
+		else if (ctx.decode._bool)
+			base64_exec(&ctx, base64_decode);
+	}
 
 	base64_ctx_delete(&ctx);
 	return (1);

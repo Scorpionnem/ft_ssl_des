@@ -6,7 +6,7 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/25 10:38:41 by mbatty            #+#    #+#             */
-/*   Updated: 2026/03/25 10:46:14 by mbatty           ###   ########.fr       */
+/*   Updated: 2026/03/28 10:36:57 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,16 +68,19 @@ void	base64_decode(int fd, uint8_t *input, uint64_t len)
 
 	for (uint64_t i = 0; i < len; i++)
 	{
+		if (!ft_strchr(BASE64, input[i]) && input[i] != '=')
+		{
+			ft_dprintf(2, "Invalid base64 (ASCII: %d)\n", input[i]);
+			return ;
+		}
+	}
+
+	for (uint64_t i = 0; i < len; i++)
+	{
 		char c = input[i];
 
 		if (c == '\n' || c == '\r' || c == ' ' || c == '\t')
 			continue ;
-
-		if (!ft_strchr(BASE64, c) && c != '=')
-		{
-			ft_dprintf(2, "Invalid base64\n");
-			return ;
-		}
 
 		block[count++] = c;
 

@@ -6,7 +6,7 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 12:34:07 by mbatty            #+#    #+#             */
-/*   Updated: 2026/03/25 10:39:42 by mbatty           ###   ########.fr       */
+/*   Updated: 2026/03/28 10:29:27 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ typedef struct	s_base64_ctx
 	t_opt				encode;
 	t_opt				input;
 	t_opt				output;
+	t_opt				string;
 }	t_base64_ctx;
 
 int		base64_ctx_init(t_base64_ctx *ctx, char ***av);

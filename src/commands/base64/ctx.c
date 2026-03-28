@@ -6,7 +6,7 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/25 10:38:39 by mbatty            #+#    #+#             */
-/*   Updated: 2026/03/25 21:00:11 by mbatty           ###   ########.fr       */
+/*   Updated: 2026/03/28 10:30:04 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ Options:\n\
   -e --encode\t\tencode mode\n\
   -i --input <string>\tinput file\n\
   -o --output <string>\toutput file\n\
+  -s --string <string>\tinput string\n\
 \n\
 "
 
@@ -68,6 +69,9 @@ int	base64_ctx_init_opts(t_base64_ctx *ctx, char ***av)
 
 	opt_ctx_add_opt(&ctx->opt_ctx, "-o", &ctx->output, OPT_STR);
 	opt_ctx_add_opt(&ctx->opt_ctx, "--output", &ctx->output, OPT_STR);
+
+	opt_ctx_add_opt(&ctx->opt_ctx, "-s", &ctx->string, OPT_STR);
+	opt_ctx_add_opt(&ctx->opt_ctx, "--string", &ctx->string, OPT_STR);
 
 	if (opt_ctx_parse(&ctx->opt_ctx, av) == -1)
 	{
