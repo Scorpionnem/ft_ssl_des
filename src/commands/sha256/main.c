@@ -6,7 +6,7 @@
 /*   By: mbatty <mbatty@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/24 17:58:29 by mbatty            #+#    #+#             */
-/*   Updated: 2026/03/25 10:25:39 by mbatty           ###   ########.fr       */
+/*   Updated: 2026/03/28 10:19:41 by mbatty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,17 @@
 #include "input.h"
 #include <stdint.h>
 
-char	*sha256(uint8_t *msg, uint64_t len);
+char	*sha256(uint8_t *msg, uint64_t len, uint8_t buf[32]);
+
+char	*get_sha256_str(uint8_t *msg, uint64_t len)
+{
+	uint8_t	buf[32];
+	sha256(msg, len, buf);
+	char	*res = ft_calloc(65, sizeof(char));
+	for (uint32_t i = 0; i < 32; i++)
+		ft_itoa_hex(res + i * 2, buf[i]);
+	return (res);
+}
 
 static void	print_no_nl(char *str, uint32_t len)
 {
@@ -36,7 +46,7 @@ static int	process_stdin(t_sha256_ctx *ctx)
 	if (input_get(&in, INPUT_STDIN, NULL, 0) == -1)
 		return (-1);
 
-	char	*h = sha256(in.bytes, in.size);
+	char	*h = get_sha256_str(in.bytes, in.size);
 
 	if (!ctx->reverse._bool && !ctx->quiet._bool)
 	{
@@ -78,7 +88,7 @@ static int	process_files(t_sha256_ctx *ctx, char **av)
 			continue ;
 		}
 
-		char	*h = sha256(in.bytes, in.size);
+		char	*h = get_sha256_str(in.bytes, in.size);
 
 		if (!ctx->reverse._bool && !ctx->quiet._bool)
 			ft_printf("SHA256 (%s) = %s\n", *av, h);
@@ -94,7 +104,7 @@ static int	process_files(t_sha256_ctx *ctx, char **av)
 
 static int	process_string(t_sha256_ctx *ctx, char *str)
 {
-	char	*hash_str = sha256((uint8_t*)str, ft_strlen(str));
+	char	*hash_str = get_sha256_str((uint8_t*)str, ft_strlen(str));
 	if (!hash_str)
 		return (-1);
 
